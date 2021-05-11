@@ -27,22 +27,36 @@ class PhoneInfo extends Component {
       [name]: value,
     });
   };
+  // todo 스스로의 힘으로는 아직
   componentDidUpdate(prevProps, prevState) {
     const { info, onUpdate } = this.props;
     if (!prevState.editing && this.state.editing) {
+      // editing 값이 false -> true 로 전환 될 때
+      // info 의 값을 state 에 넣어준다
       this.setState({
         name: info.name,
         phone: info.phone,
       });
     }
     if (prevState.editing && !this.state.editing) {
+      // editing 값이 true -> false 로 전환 될 때
       onUpdate(info.id, {
         name: this.state.name,
         phone: this.state.phone,
       });
     }
   }
+  // todo 스스로의 힘으로는 아직
+  shouldComponentUpdate(nextProps, nextState) {
+    // 수정 상태가 아니고, info 값이 같다면 리렌더링 안함
+    if (!this.state.editing && !nextState.editing && nextProps.info === this.props.info) {
+      return false;
+    }
+    // 나머지 경우엔 리렌더링함
+    return true;
+  }
   render() {
+    console.log("render PhoneInfo " + this.props.info.id);
     const style = {
       border: "1px solid black",
       padding: "8px",

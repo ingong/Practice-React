@@ -31,12 +31,20 @@ class App extends Component {
       information: information.filter((info) => info.id !== id),
     });
   };
+  handleUpdate = (id, data) => {
+    const { information } = this.state;
+    this.setState({
+      information: information.map((info) => (id === info.id ? { ...info, ...data } : info)),
+    });
+    // 새 객체를 만들어서 기존의 값과 전달받은 data 를 덮어씀
+    // 기존의 값 그대로 유지
+  };
   render() {
     const { information } = this.state;
     return (
       <div>
         <PhoneForm onCreate={this.handleCreate} />
-        <PhoneInfoList data={information} onRemove={this.handleRemove} />
+        <PhoneInfoList data={information} onRemove={this.handleRemove} onUpdate={this.handleUpdate} />
       </div>
     );
   }

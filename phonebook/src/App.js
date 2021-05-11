@@ -24,6 +24,7 @@ class App extends Component {
       information: information.concat({ id: this.id++, ...data }),
     });
   };
+
   handleRemove = (id) => {
     const { information } = this.state;
     this.setState({
